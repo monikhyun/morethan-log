@@ -4,7 +4,7 @@ const CONFIG = {
     name: "monikhyun",
     image: "/my-profile.jpeg", // 노션 프로필 이미지를 쓰시려면 노션에서 이미지 주소를 복사해 넣거나, public 폴더에 저장 후 경로를 수정해야 합니다.
     role: "backend developer",
-    bio: "Java와 Spring을 사랑하는 백엔드 개발자 monikhyun입니다.",
+    bio: "문익현의 개발 일기",
     email: "mih2001103@naver.com", // 필요시 실제 이메일로 수정하세요.
     linkedin: "monikhyun0813", // 링크드인 ID가 같다면 유지, 아니라면 수정 필요
     github: "monikhyun",
@@ -12,12 +12,12 @@ const CONFIG = {
   },
   projects: [
     {
-      name: `tribe`,
-      href: "https://github.com/monikhyun/tribe",
+      name: `TRIBE`,
+      href: "https://github.com/monikhyun/tribe-api",
     },
     {
       name: `MEETNY`,
-      href: "https://github.com/monikhyun/MEETNY",
+      href: "https://github.com/monikhyun/Meetny-Backend",
     },
   ],
   // blog setting (required)
