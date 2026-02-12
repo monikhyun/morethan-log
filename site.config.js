@@ -2,7 +2,7 @@ const CONFIG = {
   // profile setting (required)
   profile: {
     name: "monikhyun",
-    image: "https://lh3.googleusercontent.com/a/ACg8ocIdWi3KKIJDLt2OYk4bBEZatKF9X9rV6sFG4Qd_gqonk8CKcw=s100", // 노션 프로필 이미지를 쓰시려면 노션에서 이미지 주소를 복사해 넣거나, public 폴더에 저장 후 경로를 수정해야 합니다.
+    image: "/my-profile.png", // 노션 프로필 이미지를 쓰시려면 노션에서 이미지 주소를 복사해 넣거나, public 폴더에 저장 후 경로를 수정해야 합니다.
     role: "backend developer",
     bio: "Java와 Spring을 사랑하는 백엔드 개발자 monikhyun입니다.",
     email: "mih2001103@naver.com", // 필요시 실제 이메일로 수정하세요.
@@ -24,11 +24,11 @@ const CONFIG = {
   blog: {
     title: "monikhyun-log",
     description: "monikhyun의 개발 기록 공간입니다.",
-    scheme: "dark", // 'light' | 'dark' | 'system'
+    scheme: "system", // 'light' | 'dark' | 'system'
   },
 
   // CONFIG configration (required)
-  link: "https://morethan-log.vercel.app", // 실제 배포될 URL
+  link: "https://monikhyun.vercel.app/", // 실제 배포될 URL
   since: 2026, 
   lang: "ko-KR", 
   ogImageGenerateURL: "https://og-image-korean.vercel.app", 
