@@ -1,37 +1,41 @@
 const CONFIG = {
   // profile setting (required)
   profile: {
-    name: "morethanmin",
-    image: "/avatar.svg", // If you want to create your own notion avatar, check out https://notion-avatar.vercel.app
-    role: "frontend developer",
-    bio: "I develop everything using node.",
-    email: "morethanmin.dev@gmail.com",
-    linkedin: "morethanmin",
-    github: "morethanmin",
+    name: "monikhyun",
+    image: "https://lh3.googleusercontent.com/a/ACg8ocIdWi3KKIJDLt2OYk4bBEZatKF9X9rV6sFG4Qd_gqonk8CKcw=s100", // 노션 프로필 이미지를 쓰시려면 노션에서 이미지 주소를 복사해 넣거나, public 폴더에 저장 후 경로를 수정해야 합니다.
+    role: "backend developer",
+    bio: "Java와 Spring을 사랑하는 백엔드 개발자 monikhyun입니다.",
+    email: "mih2001103@naver.com", // 필요시 실제 이메일로 수정하세요.
+    linkedin: "monikhyun0813", // 링크드인 ID가 같다면 유지, 아니라면 수정 필요
+    github: "monikhyun",
     instagram: "",
   },
   projects: [
     {
-      name: `morethan-log`,
-      href: "https://github.com/morethanmin/morethan-log",
+      name: `tribe`,
+      href: "https://github.com/monikhyun/tribe",
+    },
+    {
+      name: `MEETNY`,
+      href: "https://github.com/monikhyun/MEETNY",
     },
   ],
   // blog setting (required)
   blog: {
-    title: "morethan-log",
-    description: "welcome to morethan-log!",
+    title: "monikhyun-log",
+    description: "monikhyun의 개발 기록 공간입니다.",
     scheme: "dark", // 'light' | 'dark' | 'system'
   },
 
   // CONFIG configration (required)
-  link: "https://morethan-log.vercel.app",
-  since: 2022, // If leave this empty, current year will be used.
-  lang: "en-US", // ['en-US', 'zh-CN', 'zh-HK', 'zh-TW', 'ja-JP', 'es-ES', 'ko-KR']
-  ogImageGenerateURL: "https://og-image-korean.vercel.app", // The link to generate OG image, don't end with a slash
+  link: "https://morethan-log.vercel.app", // 실제 배포될 URL
+  since: 2026, 
+  lang: "ko-KR", 
+  ogImageGenerateURL: "https://og-image-korean.vercel.app", 
 
   // notion configuration (required)
   notionConfig: {
-    pageId: process.env.NOTION_PAGE_ID,
+    pageId: "305c9aa6f1788145a810f51fd3ce47f5",
   },
 
   // plugin configuration (optional)
@@ -56,7 +60,7 @@ const CONFIG = {
   utterances: {
     enable: true,
     config: {
-      repo: process.env.NEXT_PUBLIC_UTTERANCES_REPO || "",
+      repo: "monikhyun/morethan-log", // 댓글이 저장될 본인의 GitHub 레포지토리 주소
       "issue-term": "og:title",
       label: "💬 Utterances",
     },
@@ -65,11 +69,11 @@ const CONFIG = {
     enable: false,
     config: {
       host: "https://cusdis.com",
-      appid: "", // Embed Code -> data-app-id value
+      appid: "", 
     },
   },
-  isProd: process.env.VERCEL_ENV === "production", // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
-  revalidateTime: 21600 * 7, // revalidate time for [slug], index
+  isProd: process.env.VERCEL_ENV === "production", 
+  revalidateTime: 21600 * 7, 
 }
 
 module.exports = { CONFIG }
