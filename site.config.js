@@ -2,7 +2,7 @@ const CONFIG = {
   // profile setting (required)
   profile: {
     name: "monikhyun",
-    image: "/my-profile.png", // 노션 프로필 이미지를 쓰시려면 노션에서 이미지 주소를 복사해 넣거나, public 폴더에 저장 후 경로를 수정해야 합니다.
+    image: "/my-profile.jpeg", // 노션 프로필 이미지를 쓰시려면 노션에서 이미지 주소를 복사해 넣거나, public 폴더에 저장 후 경로를 수정해야 합니다.
     role: "backend developer",
     bio: "Java와 Spring을 사랑하는 백엔드 개발자 monikhyun입니다.",
     email: "mih2001103@naver.com", // 필요시 실제 이메일로 수정하세요.
