@@ -73,7 +73,7 @@ const CONFIG = {
     },
   },
   isProd: process.env.VERCEL_ENV === "production", 
-  revalidateTime: 1, 
+  revalidateTime: 60, 
 }
 
 module.exports = { CONFIG }
