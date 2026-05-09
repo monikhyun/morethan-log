@@ -8,10 +8,29 @@ import { normalizeRecordMap } from "src/libs/utils/notion/normalizeRecordMap"
 import { TPosts } from "src/types"
 
 /**
- * @param {{ includePages: boolean }} - false: posts only / true: include pages
+ * Notion record에서 실제 value만 꺼낸다.
+ *
+ * Old:
+ * record.value
+ *
+ * New / nested:
+ * record.value.value
  */
+const getRecordValue = (record: any) => {
+  const value = record?.value
 
-// TODO: react query를 사용해서 처음 불러온 뒤로는 해당데이터만 사용하도록 수정
+  if (
+    value &&
+    typeof value === "object" &&
+    "value" in value &&
+    "role" in value
+  ) {
+    return value.value
+  }
+
+  return value
+}
+
 export const getPosts = async () => {
   const rawPageId = CONFIG.notionConfig.pageId as string
   const id = idToUuid(rawPageId)
@@ -20,54 +39,66 @@ export const getPosts = async () => {
   const response = normalizeRecordMap(
     await api.getPage(id, { fetchCollections: false })
   )
-  const collection = Object.values(response.collection)[0]?.value
+
   const block = response.block
+  const collection = getRecordValue(Object.values(response.collection)[0])
   const schema = collection?.schema
 
-  const rawMetadata =
-    block[id]?.value ??
-    block[rawPageId]?.value ??
-    Object.values(block).find((block: any) => {
-      const type = block?.value?.type
-      return type === "collection_view_page" || type === "collection_view"
-    })?.value
+  const metadataBlock = Object.values(block).find((record: any) => {
+    const value = getRecordValue(record)
+    return (
+      value?.type === "collection_view_page" ||
+      value?.type === "collection_view"
+    )
+  })
 
-  // Check Type
+  const rawMetadata =
+    getRecordValue(block[id]) ??
+    getRecordValue(block[rawPageId]) ??
+    getRecordValue(metadataBlock)
+
   if (
     rawMetadata?.type !== "collection_view_page" &&
     rawMetadata?.type !== "collection_view"
   ) {
     return []
-  } else {
-    const collectionId = rawMetadata.collection_id ?? collection?.id
-    await fetchCollectionData(api, response, collectionId, rawMetadata.view_ids)
+  }
 
-    // Construct Data
-    const pageIds = getAllPageIds(response)
-    const data = []
-    for (let i = 0; i < pageIds.length; i++) {
-      const id = pageIds[i]
-      const properties = (await getPageProperties(id, block, schema)) || null
-      // Add fullwidth, createdtime to properties
-      properties.createdTime = new Date(
-        block[id].value?.created_time
-      ).toString()
-      properties.fullWidth =
-        (block[id].value?.format as any)?.page_full_width ?? false
+  const collectionId = rawMetadata.collection_id ?? collection?.id
 
-      data.push(properties)
+  await fetchCollectionData(api, response, collectionId, rawMetadata.view_ids)
+
+  const pageIds = getAllPageIds(response)
+  const data = []
+
+  for (let i = 0; i < pageIds.length; i++) {
+    const pageId = pageIds[i]
+    const blockValue = getRecordValue(block[pageId])
+
+    if (!blockValue) {
+      continue
     }
 
-    // Sort by date
-    data.sort((a: any, b: any) => {
-      const dateA: any = new Date(a?.date?.start_date || a.createdTime)
-      const dateB: any = new Date(b?.date?.start_date || b.createdTime)
-      return dateB - dateA
-    })
+    const properties = (await getPageProperties(pageId, block, schema)) || null
 
-    const posts = data as TPosts
-    return posts
+    if (!properties) {
+      continue
+    }
+
+    properties.createdTime = new Date(blockValue?.created_time).toString()
+    properties.fullWidth = (blockValue?.format as any)?.page_full_width ?? false
+
+    data.push(properties)
   }
+
+  data.sort((a: any, b: any) => {
+    const dateA: any = new Date(a?.date?.start_date || a.createdTime)
+    const dateB: any = new Date(b?.date?.start_date || b.createdTime)
+    return dateB - dateA
+  })
+
+  const posts = data as TPosts
+  return posts
 }
 
 async function fetchCollectionData(
@@ -85,7 +116,7 @@ async function fetchCollectionData(
     response.collection_query[collectionId] ?? {}
 
   for (const viewId of viewIds) {
-    const collectionView = response.collection_view?.[viewId]?.value
+    const collectionView = getRecordValue(response.collection_view?.[viewId])
 
     if (!collectionView) {
       continue
@@ -96,6 +127,7 @@ async function fetchCollectionData(
       viewId,
       collectionView
     )
+
     const recordMap = normalizeRecordMap(collectionData.recordMap)
 
     Object.assign(response.block, recordMap.block)
