@@ -1,7 +1,7 @@
 const CONFIG = {
   // profile setting (required)
   profile: {
-    name: "MonIkHyun",
+    name: "IkHyun",
     image: "/my-profile.jpeg", // 노션 프로필 이미지를 쓰시려면 노션에서 이미지 주소를 복사해 넣거나, public 폴더에 저장 후 경로를 수정해야 합니다.
     role: "Backend Developer",
     bio: "문익현의 개발 일기",
