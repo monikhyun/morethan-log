@@ -5,10 +5,14 @@ export default function getAllPageIds(
   response: ExtendedRecordMap,
   viewId?: string
 ) {
-  const collectionQuery = response.collection_query
+  const collectionQuery = response.collection_query ?? {}
   const views = Object.values(collectionQuery)[0]
 
   let pageIds: ID[] = []
+  if (!views) {
+    return pageIds
+  }
+
   if (viewId) {
     const vId = idToUuid(viewId)
     const view = views[vId] as any

@@ -17,7 +17,9 @@ export const getPosts = async () => {
   const id = idToUuid(rawPageId)
   const api = new NotionAPI()
 
-  const response = normalizeRecordMap(await api.getPage(id))
+  const response = normalizeRecordMap(
+    await api.getPage(id, { fetchCollections: false })
+  )
   const collection = Object.values(response.collection)[0]?.value
   const block = response.block
   const schema = collection?.schema
@@ -37,6 +39,9 @@ export const getPosts = async () => {
   ) {
     return []
   } else {
+    const collectionId = rawMetadata.collection_id ?? collection?.id
+    await fetchCollectionData(api, response, collectionId, rawMetadata.view_ids)
+
     // Construct Data
     const pageIds = getAllPageIds(response)
     const data = []
@@ -62,5 +67,43 @@ export const getPosts = async () => {
 
     const posts = data as TPosts
     return posts
+  }
+}
+
+async function fetchCollectionData(
+  api: NotionAPI,
+  response: any,
+  collectionId?: string,
+  viewIds: string[] = []
+) {
+  if (!collectionId || !viewIds.length) {
+    return
+  }
+
+  response.collection_query = response.collection_query ?? {}
+  response.collection_query[collectionId] =
+    response.collection_query[collectionId] ?? {}
+
+  for (const viewId of viewIds) {
+    const collectionView = response.collection_view?.[viewId]?.value
+
+    if (!collectionView) {
+      continue
+    }
+
+    const collectionData = await api.getCollectionData(
+      collectionId,
+      viewId,
+      collectionView
+    )
+    const recordMap = normalizeRecordMap(collectionData.recordMap)
+
+    Object.assign(response.block, recordMap.block)
+    Object.assign(response.collection, recordMap.collection)
+    Object.assign(response.collection_view, recordMap.collection_view)
+    Object.assign(response.notion_user, recordMap.notion_user)
+
+    response.collection_query[collectionId][viewId] =
+      (collectionData.result as any)?.reducerResults
   }
 }
