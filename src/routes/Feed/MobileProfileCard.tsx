@@ -18,7 +18,7 @@ const MobileProfileCard: React.FC<Props> = ({ className }) => {
   return (
     <StyledWrapper className={className}>
       <div className="hero-copy">
-        <div className="eyebrow">Developer Portfolio</div>
+        <div className="eyebrow">Developer</div>
         <h1>{CONFIG.profile.name}</h1>
         <p className="role">{CONFIG.profile.role}</p>
         <p className="bio">{CONFIG.profile.bio}</p>
@@ -70,9 +70,9 @@ const MobileProfileCard: React.FC<Props> = ({ className }) => {
           />
         </div>
         <div>
-          <div className="status">Available for thoughtful backend work</div>
+          <div className="status">BackEnd Developer</div>
           <div className="card-title">
-            Writing about systems, products, and craft.
+            성장하는 백엔드 개발자
           </div>
         </div>
       </div>
