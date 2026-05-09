@@ -12,7 +12,7 @@ type Props = {
   className?: string
 }
 
-const TECH_STACK = ["Next.js", "Spring Boot", "Unity", "Docker", "AWS", "Vercel"]
+const TECH_STACK = ["Spring Boot", "Unity", "Docker", "AWS", "JAVA", "Android Studio", "Postman"]
 
 const MobileProfileCard: React.FC<Props> = ({ className }) => {
   return (
