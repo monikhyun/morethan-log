@@ -12,7 +12,8 @@ import { TPosts } from "src/types"
 
 // TODO: react query를 사용해서 처음 불러온 뒤로는 해당데이터만 사용하도록 수정
 export const getPosts = async () => {
-  let id = idToUuid(CONFIG.notionConfig.pageId as string)
+  const rawPageId = CONFIG.notionConfig.pageId as string
+  const id = idToUuid(rawPageId)
   const api = new NotionAPI()
 
   const response = await api.getPage(id)
@@ -20,7 +21,13 @@ export const getPosts = async () => {
   const block = response.block
   const schema = collection?.schema
 
-  const rawMetadata = block[id].value
+  const rawMetadata =
+    block[id]?.value ??
+    block[rawPageId]?.value ??
+    Object.values(block).find((block: any) => {
+      const type = block?.value?.type
+      return type === "collection_view_page" || type === "collection_view"
+    })?.value
 
   // Check Type
   if (
