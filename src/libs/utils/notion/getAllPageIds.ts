@@ -11,11 +11,13 @@ export default function getAllPageIds(
   let pageIds: ID[] = []
   if (viewId) {
     const vId = idToUuid(viewId)
-    pageIds = views[vId]?.blockIds
+    const view = views[vId] as any
+    pageIds = view?.blockIds ?? view?.collection_group_results?.blockIds ?? []
   } else {
     const pageSet = new Set<ID>()
     // * type not exist
     Object.values(views).forEach((view: any) => {
+      view?.blockIds?.forEach((id: ID) => pageSet.add(id))
       view?.collection_group_results?.blockIds?.forEach((id: ID) =>
         pageSet.add(id)
       )
