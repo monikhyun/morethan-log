@@ -1,9 +1,9 @@
 const CONFIG = {
   // profile setting (required)
   profile: {
-    name: "monikhyun",
+    name: "MonIkHyun",
     image: "/my-profile.jpeg", // 노션 프로필 이미지를 쓰시려면 노션에서 이미지 주소를 복사해 넣거나, public 폴더에 저장 후 경로를 수정해야 합니다.
-    role: "backend developer",
+    role: "Backend Developer",
     bio: "문익현의 개발 일기",
     email: "mih2001103@naver.com", // 필요시 실제 이메일로 수정하세요.
     linkedin: "monikhyun0813", // 링크드인 ID가 같다면 유지, 아니라면 수정 필요
@@ -22,8 +22,8 @@ const CONFIG = {
   ],
   // blog setting (required)
   blog: {
-    title: "monikhyun-log",
-    description: "monikhyun의 개발 기록 공간입니다.",
+    title: "IkHyun-log",
+    description: "개발 공부 일기장",
     scheme: "system", // 'light' | 'dark' | 'system'
   },
 
