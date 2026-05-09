@@ -26,10 +26,11 @@ const PinnedPosts: React.FC<Props> = ({ q }) => {
 
   return (
     <StyledWrapper>
-      <div className="wrapper">
-        <div className="header">📌 Pinned Posts</div>
+      <div className="section-heading">
+        <span>Pinned Notes</span>
+        <h2>Selected work and references</h2>
       </div>
-      <div className="my-2">
+      <div className="post-grid">
         {filteredPosts.map((post) => (
           <PostCard key={post.slug} data={post} />
         ))}
@@ -42,22 +43,52 @@ export default PinnedPosts
 
 const StyledWrapper = styled.div`
   position: relative;
-  .wrapper {
+
+  .section-heading {
     display: flex;
-    margin-bottom: 1rem;
     justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.gray6};
+    gap: 1rem;
+    align-items: flex-end;
+
+    @media (max-width: 640px) {
+      display: block;
+    }
+
+    span {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.75rem;
+      line-height: 1rem;
+      font-weight: 800;
+      color: ${({ theme }) => theme.colors.indigo11};
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-size: 1.65rem;
+      line-height: 2.1rem;
+      font-weight: 800;
+      color: ${({ theme }) => theme.colors.gray12};
+
+      @media (max-width: 640px) {
+        font-size: 1.35rem;
+        line-height: 1.8rem;
+      }
+    }
   }
-  .header {
-    display: flex;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-    gap: 0.25rem;
-    align-items: center;
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    font-weight: 700;
-    cursor: pointer;
+
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+    }
   }
 `

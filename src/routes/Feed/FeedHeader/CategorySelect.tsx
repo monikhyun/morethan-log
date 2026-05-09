@@ -26,7 +26,7 @@ const CategorySelect: React.FC<Props> = () => {
   return (
     <StyledWrapper>
       <div ref={dropdownRef} className="wrapper" onClick={handleOpen}>
-        {currentCategory} Posts <MdExpandMore />
+        {currentCategory} Notes <MdExpandMore />
       </div>
       {opened && (
         <div className="content">
@@ -49,30 +49,44 @@ export default CategorySelect
 
 const StyledWrapper = styled.div`
   position: relative;
+
   > .wrapper {
     display: flex;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-    gap: 0.25rem;
+    padding: 0.8rem 0.95rem;
+    gap: 0.4rem;
     align-items: center;
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    font-weight: 700;
+    border: 1px solid
+      ${({ theme }) =>
+        theme.scheme === "light" ? "rgba(17, 24, 39, 0.08)" : "rgba(255, 255, 255, 0.1)"};
+    border-radius: 999px;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 800;
+    color: ${({ theme }) => theme.colors.gray12};
+    background-color: ${({ theme }) =>
+      theme.scheme === "light" ? "rgba(255, 255, 255, 0.78)" : "rgba(39, 39, 42, 0.72)"};
     cursor: pointer;
   }
+
   > .content {
     position: absolute;
+    right: 0;
     z-index: 40;
-    padding: 0.25rem;
-    border-radius: 0.75rem;
-    background-color: ${({ theme }) => theme.colors.gray2};
+    min-width: 11rem;
+    padding: 0.35rem;
+    margin-top: 0.5rem;
+    border: 1px solid
+      ${({ theme }) =>
+        theme.scheme === "light" ? "rgba(17, 24, 39, 0.08)" : "rgba(255, 255, 255, 0.1)"};
+    border-radius: 1rem;
+    background-color: ${({ theme }) =>
+      theme.scheme === "light" ? "rgba(255, 255, 255, 0.96)" : "rgba(24, 24, 27, 0.98)"};
     color: ${({ theme }) => theme.colors.gray10};
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 18px 44px
+      ${({ theme }) => (theme.scheme === "light" ? "rgba(15, 23, 42, 0.12)" : "rgba(0, 0, 0, 0.34)")};
+
     > .item {
-      padding: 0.25rem;
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
+      padding: 0.55rem 0.7rem;
       border-radius: 0.75rem;
       font-size: 0.875rem;
       line-height: 1.25rem;
@@ -80,7 +94,9 @@ const StyledWrapper = styled.div`
       cursor: pointer;
 
       :hover {
-        background-color: ${({ theme }) => theme.colors.gray4};
+        color: ${({ theme }) => theme.colors.gray12};
+        background-color: ${({ theme }) =>
+          theme.scheme === "light" ? "rgba(243, 244, 246, 0.9)" : "rgba(39, 39, 42, 0.9)"};
       }
     }
   }

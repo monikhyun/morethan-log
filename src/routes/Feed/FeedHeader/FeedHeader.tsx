@@ -1,4 +1,3 @@
-import { TCategories } from "src/types"
 import React from "react"
 import CategorySelect from "./CategorySelect"
 import OrderButtons from "./OrderButtons"
@@ -19,8 +18,10 @@ export default FeedHeader
 
 const StyledWrapper = styled.div`
   display: flex;
-  margin-bottom: 1rem;
-  justify-content: space-between;
+  gap: 0.75rem;
   align-items: center;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray6};
+
+  @media (max-width: 768px) {
+    justify-content: space-between;
+  }
 `

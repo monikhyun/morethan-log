@@ -12,8 +12,6 @@ import ContactCard from "./ContactCard"
 import PostList from "./PostList"
 import PinnedPosts from "./PostList/PinnedPosts"
 
-const HEADER_HEIGHT = 73
-
 type Props = {}
 
 const Feed: React.FC<Props> = () => {
@@ -21,39 +19,23 @@ const Feed: React.FC<Props> = () => {
 
   return (
     <StyledWrapper>
-      <div
-        className="lt"
-        css={{
-          height: `calc(100vh - ${HEADER_HEIGHT}px)`,
-        }}
-      >
-        <TagList />
-      </div>
-      <div className="mid">
-        <MobileProfileCard />
-        <PinnedPosts q={q} />
-        <SearchInput value={q} onChange={(e) => setQ(e.target.value)} />
-        <div className="tags">
-          <TagList />
-        </div>
-        <FeedHeader />
-        <PostList q={q} />
-        <div className="footer">
-          <Footer />
-        </div>
-      </div>
-      <div
-        className="rt"
-        css={{
-          height: `calc(100vh - ${HEADER_HEIGHT}px)`,
-        }}
-      >
+      <MobileProfileCard />
+      <div className="portfolio-panels">
         <ProfileCard />
         <ServiceCard />
         <ContactCard />
-        <div className="footer">
-          <Footer />
+      </div>
+      <PinnedPosts q={q} />
+      <section className="feed-controls" aria-label="Writing filters">
+        <div className="control-row">
+          <SearchInput value={q} onChange={(e) => setQ(e.target.value)} />
+          <FeedHeader />
         </div>
+        <TagList />
+      </section>
+      <PostList q={q} />
+      <div className="footer">
+        <Footer />
       </div>
     </StyledWrapper>
   )
@@ -62,77 +44,98 @@ const Feed: React.FC<Props> = () => {
 export default Feed
 
 const StyledWrapper = styled.div`
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-
-  padding: 2rem 0;
-  display: grid;
-  gap: 1.5rem;
+  position: relative;
+  display: flex;
+  padding: 3rem 0 4rem;
+  flex-direction: column;
+  gap: 2rem;
 
   @media (max-width: 768px) {
-    display: block;
-    padding: 0.5rem 0;
+    padding: 1.25rem 0 3rem;
+    gap: 1.25rem;
   }
 
-  > .lt {
-    display: none;
-    overflow: scroll;
-    position: sticky;
-    grid-column: span 2 / span 2;
-    top: ${HEADER_HEIGHT - 10}px;
+  :before {
+    content: "";
+    position: absolute;
+    top: -8rem;
+    left: 50%;
+    width: min(56rem, 100%);
+    height: 26rem;
+    pointer-events: none;
+    transform: translateX(-50%);
+    background:
+      radial-gradient(
+        circle at 20% 20%,
+        ${({ theme }) =>
+          theme.scheme === "light" ? "rgba(79, 70, 229, 0.16)" : "rgba(99, 102, 241, 0.2)"},
+        transparent 34%
+      ),
+      radial-gradient(
+        circle at 78% 12%,
+        ${({ theme }) =>
+          theme.scheme === "light" ? "rgba(14, 165, 233, 0.14)" : "rgba(56, 189, 248, 0.12)"},
+        transparent 30%
+      );
+    filter: blur(14px);
+  }
 
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    &::-webkit-scrollbar {
-      display: none;
+  > * {
+    position: relative;
+  }
+
+  > .portfolio-panels {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+
+    @media (max-width: 960px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    @media (min-width: 1024px) {
-      display: block;
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
     }
   }
 
-  > .mid {
-    grid-column: span 12 / span 12;
+  > .feed-controls {
+    padding: 1rem;
+    border: 1px solid
+      ${({ theme }) =>
+        theme.scheme === "light" ? "rgba(17, 24, 39, 0.08)" : "rgba(255, 255, 255, 0.1)"};
+    border-radius: 1.5rem;
+    background:
+      linear-gradient(
+        180deg,
+        ${({ theme }) =>
+          theme.scheme === "light" ? "rgba(255, 255, 255, 0.86)" : "rgba(24, 24, 27, 0.82)"},
+        ${({ theme }) =>
+          theme.scheme === "light" ? "rgba(249, 250, 251, 0.72)" : "rgba(17, 17, 19, 0.72)"}
+      );
+    box-shadow:
+      0 18px 45px ${({ theme }) => (theme.scheme === "light" ? "rgba(15, 23, 42, 0.06)" : "rgba(0, 0, 0, 0.24)")},
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
 
-    @media (min-width: 1024px) {
-      grid-column: span 7 / span 7;
-    }
+    > .control-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1rem;
+      align-items: flex-end;
 
-    > .tags {
-      display: block;
-
-      @media (min-width: 1024px) {
-        display: none;
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
       }
     }
 
-    > .footer {
-      padding-bottom: 2rem;
-      @media (min-width: 1024px) {
-        display: none;
-      }
+    @media (max-width: 640px) {
+      padding: 0.875rem;
+      border-radius: 1.25rem;
     }
   }
 
-  > .rt {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    display: none;
-    overflow: scroll;
-    position: sticky;
-    top: ${HEADER_HEIGHT - 10}px;
-
-    @media (min-width: 1024px) {
-      display: block;
-      grid-column: span 3 / span 3;
-    }
-
-    .footer {
-      padding-top: 1rem;
-    }
+  > .footer {
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
   }
 `

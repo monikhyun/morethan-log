@@ -1,7 +1,6 @@
 import styled from "@emotion/styled"
 import { useRouter } from "next/router"
 import React from "react"
-import { Emoji } from "src/components/Emoji"
 import { useTagsQuery } from "src/hooks/useTagsQuery"
 
 type Props = {}
@@ -34,9 +33,7 @@ const TagList: React.FC<Props> = () => {
 
   return (
     <StyledWrapper>
-      <div className="top">
-        <Emoji>🏷️</Emoji> Tags
-      </div>
+      <div className="top">Explore Topics</div>
       <div className="list">
         {Object.keys(data).map((key) => (
           <a
@@ -56,20 +53,18 @@ export default TagList
 
 const StyledWrapper = styled.div`
   .top {
-    display: none;
-    padding: 0.25rem;
-    margin-bottom: 0.75rem;
-
-    @media (min-width: 1024px) {
-      display: block;
-    }
+    margin: 1rem 0 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 800;
+    color: ${({ theme }) => theme.colors.indigo11};
+    text-transform: uppercase;
   }
 
   .list {
     display: flex;
-    margin-bottom: 1.5rem;
-    gap: 0.25rem;
-    overflow: scroll;
+    gap: 0.45rem;
+    overflow-x: auto;
 
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -78,33 +73,43 @@ const StyledWrapper = styled.div`
       height: 0;
     }
 
-    @media (min-width: 1024px) {
-      display: block;
-    }
-
     a {
       display: block;
-      padding: 0.25rem;
-      padding-left: 1rem;
-      padding-right: 1rem;
-      margin-top: 0.25rem;
-      margin-bottom: 0.25rem;
-      border-radius: 0.75rem;
+      padding: 0.45rem 0.75rem;
+      border: 1px solid
+        ${({ theme }) =>
+          theme.scheme === "light" ? "rgba(17, 24, 39, 0.08)" : "rgba(255, 255, 255, 0.1)"};
+      border-radius: 999px;
       font-size: 0.875rem;
       line-height: 1.25rem;
       color: ${({ theme }) => theme.colors.gray10};
+      background-color: ${({ theme }) =>
+        theme.scheme === "light" ? "rgba(255, 255, 255, 0.62)" : "rgba(39, 39, 42, 0.62)"};
       flex-shrink: 0;
       cursor: pointer;
+      transition:
+        transform 180ms ease,
+        color 180ms ease,
+        border-color 180ms ease,
+        background-color 180ms ease;
 
       :hover {
-        background-color: ${({ theme }) => theme.colors.gray4};
-      }
-      &[data-active="true"] {
+        transform: translateY(-1px);
         color: ${({ theme }) => theme.colors.gray12};
-        background-color: ${({ theme }) => theme.colors.gray4};
+        border-color: ${({ theme }) =>
+          theme.scheme === "light" ? "rgba(17, 24, 39, 0.14)" : "rgba(255, 255, 255, 0.16)"};
+      }
+
+      &[data-active="true"] {
+        color: ${({ theme }) => theme.colors.indigo12};
+        border-color: ${({ theme }) =>
+          theme.scheme === "light" ? "rgba(79, 70, 229, 0.28)" : "rgba(129, 140, 248, 0.34)"};
+        background-color: ${({ theme }) =>
+          theme.scheme === "light" ? "rgba(238, 242, 255, 0.86)" : "rgba(49, 46, 129, 0.28)"};
 
         :hover {
-          background-color: ${({ theme }) => theme.colors.gray4};
+          background-color: ${({ theme }) =>
+            theme.scheme === "light" ? "rgba(238, 242, 255, 0.95)" : "rgba(49, 46, 129, 0.34)"};
         }
       }
     }
