@@ -1,5 +1,3 @@
-import { ExtendedRecordMap } from "notion-types"
-
 const tableNames = [
   "block",
   "collection",
@@ -22,7 +20,7 @@ function normalizeRecord(record: any) {
   }
 }
 
-export function normalizeRecordMap<T extends ExtendedRecordMap>(
+export function normalizeRecordMap<T extends Record<string, any>>(
   recordMap: T
 ): T {
   const normalizedRecordMap = recordMap as any
