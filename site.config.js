@@ -28,7 +28,7 @@ const CONFIG = {
   },
 
   // CONFIG configration (required)
-  link: "https://monikhyun.vercel.app/", // 실제 배포될 URL
+  link: "https://monikhyun.space", // 실제 배포될 URL
   since: 2026, 
   lang: "ko-KR", 
   ogImageGenerateURL: "https://og-image-korean.vercel.app", 
